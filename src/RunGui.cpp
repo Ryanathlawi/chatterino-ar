@@ -112,9 +112,16 @@ void initQt()
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     // Arabic build: bundled Thmanyah font + right-to-left UI
-    for (const auto &f : QDir(":/fonts").entryList({"*.otf"}))
+    for (const auto &f : QDir(":/fonts").entryList({"*.otf", "*.ttf"}))
     {
         QFontDatabase::addApplicationFont(":/fonts/" + f);
+    }
+    // Thmanyah's license forbids publishing its files, so public builds ship
+    // IBM Plex Sans Arabic (OFL) and every "thmanyah sans" lookup maps to it.
+    if (!QFontDatabase::families().contains("thmanyah sans",
+                                            Qt::CaseInsensitive))
+    {
+        QFont::insertSubstitution("thmanyah sans", "IBM Plex Sans Arabic");
     }
     QFont uiFont("thmanyah sans", 10, QFont::Medium);
     uiFont.setHintingPreference(QFont::PreferFullHinting);

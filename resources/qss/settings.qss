@@ -1,0 +1,178 @@
+/* Arabic build: flat dark settings (one accent: green) */
+* {
+    font-size: 13px;
+    font-family: "thmanyah sans";
+    color: #e6e6ea;
+}
+
+QToolTip {
+    padding: 6px 8px;
+    background-color: #1c1c22;
+    border: 1px solid #2a2a31;
+    border-radius: 6px;
+    color: #e6e6ea;
+}
+
+QLineEdit, QSpinBox, QDoubleSpinBox, QPlainTextEdit, QTextEdit {
+    background: #18181d;
+    border: 1px solid #26262d;
+    border-radius: 6px;
+    padding: 5px 8px;
+    selection-background-color: #1fae6a;
+}
+QLineEdit:focus, QSpinBox:focus, QPlainTextEdit:focus, QTextEdit:focus {
+    border: 1px solid #1fae6a;
+}
+
+QPushButton {
+    background: #1c1c22;
+    border: 1px solid #2a2a31;
+    border-radius: 6px;
+    padding: 6px 14px;
+}
+QPushButton:hover {
+    background: #24242b;
+}
+QPushButton:pressed, QPushButton:default {
+    background: #1fae6a;
+    border-color: #1fae6a;
+    color: #ffffff;
+}
+
+QComboBox, chatterino--ComboBox {
+    background: #18181d;
+    border: 1px solid #26262d;
+    border-radius: 6px;
+    padding: 4px 10px;
+    min-width: 120px;
+}
+QComboBox:hover {
+    border-color: #3a3a43;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox QAbstractItemView {
+    background: #18181d;
+    border: 1px solid #2a2a31;
+    selection-background-color: #1fae6a;
+    outline: none;
+}
+
+QCheckBox {
+    spacing: 10px;
+}
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #3a3a43;
+    background: #18181d;
+}
+QCheckBox::indicator:checked {
+    background: #1fae6a;
+    border-color: #1fae6a;
+}
+
+QScrollBar:vertical {
+    background: transparent;
+    width: 8px;
+    margin: 0;
+}
+QScrollBar::handle:vertical {
+    background: #2e2e36;
+    border-radius: 4px;
+    min-height: 30px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #45454f;
+}
+QScrollBar::add-line, QScrollBar::sub-line,
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: none;
+    height: 0;
+}
+
+QScrollArea, QScrollArea QFrame {
+    border: none;
+}
+
+QTableView, QListView, QTreeView {
+    background: #141418;
+    alternate-background-color: #17171c;
+    border: 1px solid #222228;
+    border-radius: 6px;
+    gridline-color: #222228;
+    selection-background-color: #1d5c3f;
+}
+QHeaderView::section {
+    background: #18181d;
+    border: none;
+    border-bottom: 1px solid #26262d;
+    padding: 6px;
+    color: #9a9aa4;
+}
+
+QTabWidget::pane {
+    border: 1px solid #222228;
+    border-radius: 6px;
+}
+QTabBar::tab {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 6px 14px;
+    color: #9a9aa4;
+}
+QTabBar::tab:selected {
+    color: #ffffff;
+    border-bottom-color: #1fae6a;
+}
+
+chatterino--SettingsPage #generalSettingsScrollContent {
+    background: transparent;
+}
+
+chatterino--PageHeader {
+    margin-bottom: 8px;
+}
+
+chatterino--TitleLabel {
+    font-family: "thmanyah sans";
+    font-weight: bold;
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 12px;
+}
+
+chatterino--SubtitleLabel {
+    font-family: "thmanyah sans";
+    font-weight: bold;
+    font-size: 14px;
+    color: #9a9aa4;
+}
+
+chatterino--DescriptionLabel, QLabel#description {
+    color: #8b8b95;
+}
+
+chatterino--NavigationLabel {
+    font-family: "thmanyah sans";
+    font-size: 13px;
+    color: #8b8b95;
+}
+
+/* one row per option, separated by a hairline */
+#settingCard {
+    background: #141418;
+    border: 1px solid #1f1f25;
+    border-radius: 8px;
+    margin: 2px 0;
+}
+#settingCard:hover {
+    background: #18181d;
+}
+#settingCard QLabel, #settingCard QCheckBox {
+    background: transparent;
+}

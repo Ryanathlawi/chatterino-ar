@@ -1,0 +1,443 @@
+builtin\Misc.cpp |  | Twitch has removed the ability to follow users through third-party applications. For more information, see https://github.com/Chatterino/chatterino2/issues/3076
+builtin\Misc.cpp |  | Twitch has removed the ability to unfollow users through third-party applications. For more information, see https://github.com/Chatterino/chatterino2/issues/3076
+builtin\Misc.cpp |  | The /uptime command only works in Twitch Channels.
+builtin\Misc.cpp | eamStatus->live ? streamStatus->uptime : | Channel is not live.
+builtin\Misc.cpp | ctx.channel->addSystemMessage( | Usage: /user <user> [channel]
+builtin\Misc.cpp |  | Usage: /requests [channel]. You can also use the command without arguments in any Twitch channel to open its channel points requests queue. Only the broadcaster and moderators have permission to view the queue.
+builtin\Misc.cpp |  | Usage: /lowtrust [channel]. You can also use the command without arguments in any Twitch channel to open its suspicious user activity feed. Only the broadcaster and moderators have permission to view this feed.
+builtin\Misc.cpp |  | The /clip command only works in Twitch Channels.
+builtin\Misc.cpp |  | The /clip command only works in Twitch Channels.
+builtin\Misc.cpp | parser.addPositionalArgument("title", | The title of the clip
+builtin\Misc.cpp | {"d", "duration"}, | The duration of the clip
+builtin\Misc.cpp |  | Could not parse clip duration to an integer.
+builtin\Misc.cpp |  | The /marker command only works in Twitch channels.
+builtin\Misc.cpp |  | You need to be logged in to create stream markers!
+builtin\Misc.cpp |  | You can only add stream markers during live streams. Try again when the channel is live streaming.
+builtin\Misc.cpp | QString( | Successfully added a stream marker at %1%2
+builtin\Misc.cpp | QString errorMessage( | Failed to create stream marker - 
+builtin\Misc.cpp |  | you don't have permission to perform that action.
+builtin\Misc.cpp | errorMessage += | you need to re-authenticate.
+builtin\Misc.cpp | errorMessage += | an unknown error occurred.
+builtin\Misc.cpp |  | /streamlink [channel]. Open specified Twitch channel in streamlink. If no channel argument is specified, open the current Twitch channel instead.
+builtin\Misc.cpp |  | Usage: /popout <channel>. You can also use the command without arguments in any Twitch channel to open its popout chat.
+builtin\Misc.cpp |  | Usage: /popup [channel]. Open specified Twitch channel in a new window. If no channel argument is specified, open the currently selected split instead.
+builtin\Misc.cpp | *    with the setting | Open links in incognito/private mode
+builtin\Misc.cpp | *    with the setting | Open links in incognito/private mode
+builtin\Misc.cpp | *    with the setting | Open links in incognito/private mode
+builtin\Misc.cpp | *    with the setting | Open links in incognito/private mode
+builtin\Misc.cpp | parser.addPositionalArgument("URL", | The URL to open
+builtin\Misc.cpp |  | Force private mode. Cannot be used together with --no-private
+builtin\Misc.cpp |  | Force non-private mode. Cannot be used together with --private
+builtin\Misc.cpp |  | Usage: /openurl <URL> [--incognito/--no-incognito]
+builtin\Misc.cpp | ctx.channel->addSystemMessage( | Invalid URL specified.
+builtin\Misc.cpp |  | Error: /openurl may only be called with --incognito or --no-incognito, not both at the same time.
+builtin\Misc.cpp | ctx.channel->addSystemMessage( | Could not open URL.
+builtin\Misc.cpp |  | The /fakemsg command only works in Twitch channels.
+builtin\Misc.cpp |  | Usage: /fakemsg (raw irc text) - injects raw irc text as if it was a message received from TMI
+builtin\Misc.cpp |  | The /debug-update-to-no-stream command only works in Twitch channels
+builtin\Misc.cpp | ctx.channel->addSystemMessage( | Usage: /copy <text> - copies provided text to clipboard.
+builtin\Misc.cpp |  | The /unstable-set-user-color command only works in Twitch channels.
+builtin\Misc.cpp | QString( | Usage: %1 <TwitchUserID> [color]
+builtin\Misc.cpp | channel->addSystemMessage( | Usage: /usercard <username> [channel] or /usercard id:<id> [channel]
+builtin\Misc.cpp |  | A usercard can only be displayed for a channel that is currently opened in Chatterino.
+builtin\Misc.cpp |  | something went HORRIBLY wrong with the /usercard command. It couldn't find a split for a channel which should be open.
+builtin\chatterino\Debugging.cpp |  | Usage: /c2-set-logging-rules <rules...>. To enable debug logging for all categories from chatterino, use 'chatterino.*.debug=true'. For the format on the rules, see https://doc.qt.io/qt-6/qloggingcategory.html#configuring-categories
+builtin\chatterino\Debugging.cpp | QStringLiteral( | Updated filter rules to '%1'.
+builtin\chatterino\Debugging.cpp |  |  Warning: Logging rules were previously set by the QT_LOGGING_RULES environment variable. This might cause interference - see: https://doc.qt.io/qt-6/qloggingcategory.html#setFilterRules
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | Disabled theme auto reloading.
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | Auto reloading theme every %1 ms.
+builtin\chatterino\Debugging.cpp |  | @tmi-sent-ts=%1;room-id=117166826;user-id=11148817;badges=;badge-info=;flags=;user-type=;emotes=;target-user-id=11148817;ban-duration=1 :tmi.twitch.tv CLEARCHAT #testaccount_420 pajlada
+builtin\chatterino\Debugging.cpp | QString( | debug-test sent desktop notification
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(QString( | checking for updates
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | requesting settings save
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | setting save failed
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | setting save success
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage(u | setting save skipped
+builtin\chatterino\Debugging.cpp | ctx.channel->addSystemMessage( | Missing name
+builtin\chatterino\Debugging.cpp | QString( | debug-test called with command: '%1'
+builtin\twitch\AddModerator.cpp |  | The /mod command only works in Twitch channels.
+builtin\twitch\AddModerator.cpp |  | Usage: \"/mod <username>\" - Grant moderator status to a user. Use \"/mods\" to list the moderators of this channel.
+builtin\twitch\AddModerator.cpp | ctx.channel->addSystemMessage( | You must be logged in to mod someone!
+builtin\twitch\AddModerator.cpp | QString( | You have added %1 as a moderator of this channel.
+builtin\twitch\AddModerator.cpp | QString( | Failed to add channel moderator - 
+builtin\twitch\AddModerator.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\AddModerator.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\AddModerator.cpp |  | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\AddModerator.cpp | QString( | %1 is currently a VIP, \"/unvip\" them and retry this command.
+builtin\twitch\AddModerator.cpp | QString( | %1 is already a moderator of this channel.
+builtin\twitch\AddModerator.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\AddModerator.cpp | QString( | Invalid username: %1
+builtin\twitch\AddVIP.cpp |  | The /vip command only works in Twitch channels.
+builtin\twitch\AddVIP.cpp |  | Usage: \"/vip <username>\" - Grant VIP status to a user. Use \"/vips\" to list the VIPs of this channel.
+builtin\twitch\AddVIP.cpp | ctx.channel->addSystemMessage( | You must be logged in to VIP someone!
+builtin\twitch\AddVIP.cpp | QString( | You have added %1 as a VIP of this channel.
+builtin\twitch\AddVIP.cpp | QString errorMessage = QString( | Failed to add VIP - 
+builtin\twitch\AddVIP.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\AddVIP.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\AddVIP.cpp |  | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\AddVIP.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\AddVIP.cpp | QString( | Invalid username: %1
+builtin\twitch\Announce.cpp |  | This command can only be used in Twitch channels.
+builtin\twitch\Announce.cpp | usageMsg = | Usage: /announce <message> - Call attention to your message with a highlight.
+builtin\twitch\Announce.cpp | QString( | Usage: /announce%1 <message> - Call attention to your message with a %1 highlight.
+builtin\twitch\Announce.cpp | QString( | You must be logged in to use the /announce%1 command.
+builtin\twitch\Announce.cpp | QString errorMessage = QString( | Failed to send announcement - 
+builtin\twitch\Announce.cpp |  | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Announce.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Ban.cpp | QString errorMessage = QString( | Failed to %1 user - 
+builtin\twitch\Ban.cpp | errorMessage += | There was a conflicting ban operation on this user. Please try again.
+builtin\twitch\Ban.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Ban.cpp | errorMessage += QString( | %1 is already banned in this channel.
+builtin\twitch\Ban.cpp | QString( | You cannot %1 %2.
+builtin\twitch\Ban.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Ban.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\Ban.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Ban.cpp | : "/ban [options...] <username> [reason] |  - Permanently prevent a user from chatting via their username. Reason is optional and will be shown to the target user and other moderators. Options: --channel <channel> to override which channel the ban takes place in (can be specified multiple times).)
+builtin\twitch\Ban.cpp | << | Error parsing command:
+builtin\twitch\Ban.cpp | ctx.channel->addSystemMessage( | You must be logged in to ban someone!
+builtin\twitch\Ban.cpp |  | Ban Action target username AND user ID may not be empty at the same time
+builtin\twitch\Ban.cpp |  | Ban Action channel username AND user ID may not be empty at the same time
+builtin\twitch\Ban.cpp | QString( | Failed to ban, bad channel name: %1
+builtin\twitch\Ban.cpp | QString( | Failed to ban, bad target name: %1
+builtin\twitch\Ban.cpp | QString( | Failed to ban, bad username(s): %1
+builtin\twitch\Ban.cpp |  | The /banid command only works in Twitch channels.
+builtin\twitch\Ban.cpp |  | Usage: \"/banid <userID> [reason]\" - Permanently prevent a user from chatting via their user ID. Reason is optional and will be shown to the target user and other moderators.
+builtin\twitch\Ban.cpp | channel->addSystemMessage( | You must be logged in to ban someone!
+builtin\twitch\Ban.cpp | username> [duration][time unit] [reason] |  - Temporarily prevent a user from chatting. Duration (optional, default=10 minutes) must be a positive integer; time unit (optional, default=s) must be one of s, m, h, d, w; maximum duration is 2 weeks. Combinations like 1d2h are also allowed. Reason is optional and will be shown to the target user and other moderators. Use 
+builtin\twitch\Ban.cpp | er and other moderators. Use "/untimeout |  to remove a timeout. Options: --channel <channel> to override which channel the timeout takes place in (can be specified multiple times).)
+builtin\twitch\Ban.cpp | << | Error parsing command:
+builtin\twitch\Ban.cpp |  | You must be logged in to timeout someone!
+builtin\twitch\Ban.cpp |  | Timeout Action target username AND user ID may not be empty at the same time
+builtin\twitch\Ban.cpp |  | Timeout Action channel username AND user ID may not be empty at the same time
+builtin\twitch\Ban.cpp | QString( | Failed to timeout, bad channel name: %1
+builtin\twitch\Ban.cpp | QString( | Failed to timeout, bad target name: %1
+builtin\twitch\Ban.cpp | QString( | Failed to timeout, bad username(s): %1
+builtin\twitch\Block.cpp |  | The /block command only works in Twitch channels.
+builtin\twitch\Block.cpp | ctx.channel->addSystemMessage( | Usage: /block <user>
+builtin\twitch\Block.cpp |  | You must be logged in to block someone!
+builtin\twitch\Block.cpp | QString( | You successfully blocked user %1
+builtin\twitch\Block.cpp | QString( | User %1 couldn't be blocked, an unknown error occurred!
+builtin\twitch\Block.cpp | channel->addSystemMessage(QString( | User %1 couldn't be blocked, no user with that name found!
+builtin\twitch\Block.cpp |  | Ignore command has been renamed to /block, please use it from now on as /ignore is going to be removed soon.
+builtin\twitch\Block.cpp |  | The /unblock command only works in Twitch channels.
+builtin\twitch\Block.cpp | ctx.channel->addSystemMessage( | Usage: /unblock <user>
+builtin\twitch\Block.cpp |  | You must be logged in to unblock someone!
+builtin\twitch\Block.cpp | QString( | You successfully unblocked user %1
+builtin\twitch\Block.cpp | QString( | User %1 couldn't be unblocked, an unknown error occurred!
+builtin\twitch\Block.cpp | channel->addSystemMessage(QString( | User %1 couldn't be unblocked, no user with that name found!
+builtin\twitch\Block.cpp |  | Unignore command has been renamed to /unblock, please use it from now on as /unignore is going to be removed soon.
+builtin\twitch\ChatSettings.cpp | c const QRegularExpression invalidRange( | (\\d+) through (\\d+)
+builtin\twitch\ChatSettings.cpp | QString errorMessage = QString( | Failed to update - 
+builtin\twitch\ChatSettings.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\ChatSettings.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\ChatSettings.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\ChatSettings.cpp | QString( | The duration is out of the valid range: %1 through %2.
+builtin\twitch\ChatSettings.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\ChatSettings.cpp | QStringLiteral( | You must be logged in to update chat settings!
+builtin\twitch\ChatSettings.cpp |  | The /emoteonly command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | This room is already in emote-only mode.
+builtin\twitch\ChatSettings.cpp |  | The /emoteonlyoff command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp | ctx.channel->addSystemMessage( | This room is not in emote-only mode.
+builtin\twitch\ChatSettings.cpp |  | The /subscribers command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | This room is already in subscribers-only mode.
+builtin\twitch\ChatSettings.cpp |  | The /subscribersoff command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | This room is not in subscribers-only mode.
+builtin\twitch\ChatSettings.cpp |  | The /slow command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | Usage: \"/slow [duration]\" - Enables slow mode (limit how often users may send messages). Duration (optional, default=30) must be a positive number of seconds. Use \"slowoff\" to disable.
+builtin\twitch\ChatSettings.cpp | QString( | This room is already in %1-second slow mode.
+builtin\twitch\ChatSettings.cpp |  | The /slowoff command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp | ctx.channel->addSystemMessage( | This room is not in slow mode.
+builtin\twitch\ChatSettings.cpp |  | The /followers command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | Usage: \"/followers [duration]\" - Enables followers-only mode (only users who have followed for 'duration' may chat). Examples: \"30m\", \"1 week\", \"5 days 12 hours\". Must be less than 3 months.
+builtin\twitch\ChatSettings.cpp | QString( | This room is already in %1 followers-only mode.
+builtin\twitch\ChatSettings.cpp |  | The /followersoff command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | This room is not in followers-only mode. 
+builtin\twitch\ChatSettings.cpp |  | The /uniquechat command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp |  | This room is already in unique-chat mode.
+builtin\twitch\ChatSettings.cpp |  | The /uniquechatoff command only works in Twitch channels.
+builtin\twitch\ChatSettings.cpp | ctx.channel->addSystemMessage( | This room is not in unique-chat mode.
+builtin\twitch\Chatters.cpp | QString errorMessage = QString( | Failed to get chatter count - 
+builtin\twitch\Chatters.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Chatters.cpp | errorMessage += | You must have moderator permissions to use this command.
+builtin\twitch\Chatters.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Chatters.cpp |  | The /chatters command only works in Twitch Channels.
+builtin\twitch\Chatters.cpp | channel->addSystemMessage(QString( | Chatter count: %1.
+builtin\twitch\Chatters.cpp |  | The /test-chatters command only works in Twitch Channels.
+builtin\twitch\Chatters.cpp | QString prefix = | Chatters 
+builtin\twitch\DeleteMessages.cpp | QString( | You must be logged in to use the %1 command.
+builtin\twitch\DeleteMessages.cpp |  | The /clear command only works in Twitch channels.
+builtin\twitch\DeleteMessages.cpp |  | The /delete command only works in Twitch channels.
+builtin\twitch\DeleteMessages.cpp | ctx.channel->addSystemMessage( | Usage: /delete <msg-id> - Deletes the specified message.
+builtin\twitch\DeleteMessages.cpp | QString( | Invalid msg-id: \"%1\"
+builtin\twitch\DeleteMessages.cpp |  | You cannot delete the broadcaster's messages unless you are the broadcaster.
+builtin\twitch\GetModerators.cpp | QString errorMessage = QString( | Failed to get moderators - 
+builtin\twitch\GetModerators.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\GetModerators.cpp |  | Due to Twitch restrictions, this command can only be used by the broadcaster. To see the list of mods you must use the Twitch website.
+builtin\twitch\GetModerators.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\GetModerators.cpp |  | The /mods command only works in Twitch Channels.
+builtin\twitch\GetModerators.cpp |  | This channel does not have any moderators.
+builtin\twitch\GetModerators.cpp |  | The moderators of this channel are
+builtin\twitch\GetVIPs.cpp | QString errorMessage = QString( | Failed to list VIPs - 
+builtin\twitch\GetVIPs.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\GetVIPs.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\GetVIPs.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\GetVIPs.cpp |  | Due to Twitch restrictions, this command can only be used by the broadcaster. To see the list of VIPs you must use the Twitch website.
+builtin\twitch\GetVIPs.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\GetVIPs.cpp |  | The /vips command only works in Twitch channels.
+builtin\twitch\GetVIPs.cpp |  | Due to Twitch restrictions, this command can only be used by the broadcaster. To see the list of VIPs you must use the Twitch website.
+builtin\twitch\GetVIPs.cpp |  | This channel does not have any VIPs.
+builtin\twitch\GetVIPs.cpp | auto messagePrefix = QString( | The VIPs of this channel are
+builtin\twitch\LowTrust.cpp |  | The 
+builtin\twitch\LowTrust.cpp | "The " % command % |  command only works in Twitch channels
+builtin\twitch\LowTrust.cpp | ctx.channel->addSystemMessage( | You must be logged in to 
+builtin\twitch\LowTrust.cpp | chan->addSystemMessage( | Failed to 
+builtin\twitch\LowTrust.cpp | ddSystemMessage("Failed to " % command % |  user - 
+builtin\twitch\LowTrust.cpp | chan->addSystemMessage( | Failed to query user to 
+builtin\twitch\LowTrust.cpp |  | The 
+builtin\twitch\LowTrust.cpp | "The " % command % |  command only works in Twitch channels
+builtin\twitch\LowTrust.cpp | ctx.channel->addSystemMessage( | You must be logged in to 
+builtin\twitch\LowTrust.cpp | chan->addSystemMessage( | Failed to 
+builtin\twitch\LowTrust.cpp | ddSystemMessage("Failed to " % command % |  user - 
+builtin\twitch\LowTrust.cpp | chan->addSystemMessage( | Failed to query user to 
+builtin\twitch\LowTrust.cpp | R"(Usage: "/monitor <username> |  - Mark a user as monitored.)
+builtin\twitch\LowTrust.cpp | R"(Usage: "/restrict <username> |  - Mark a user as restricted.)
+builtin\twitch\LowTrust.cpp | R"(Usage: "/unmonitor <username> |  - Remove a user from suspicious treatment.)
+builtin\twitch\LowTrust.cpp | R"(Usage: "/unrestrict <username> |  - Remove a user from suspicious treatment.)
+builtin\twitch\Poll.cpp | ice1>" --choice "<choice2>" [options...] |  - Creates a poll for users to vote among the defined options. Title may not exceed 60 characters. There must be between two and five poll choices. Duration must be a positive integer; time unit (optional, default=s) must be one of s, m; maximum duration is 30 minutes. Options: --points <points> to allow spending the specified channel points for each additional vote.)
+builtin\twitch\Poll.cpp | << | Error parsing command:
+builtin\twitch\Poll.cpp |  | You must be logged in to create a poll!
+builtin\twitch\Poll.cpp | QString( | Created poll: '%1'
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to create poll - 
+builtin\twitch\Poll.cpp |  | The /endpoll command only works in Twitch channels
+builtin\twitch\Poll.cpp | ctx.channel->addSystemMessage( | You must be logged in to end a poll!
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to find any polls
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Could not find an active poll
+builtin\twitch\Poll.cpp | QString( | Poll ended with zero votes: '%1'
+builtin\twitch\Poll.cpp | QString( | Poll ended in a draw: '%1'
+builtin\twitch\Poll.cpp |  | Ended poll: '%1' - '%2' won with %3 votes (%4%)
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to end the poll - 
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to query polls - 
+builtin\twitch\Poll.cpp |  | The /cancelpoll command only works in Twitch channels
+builtin\twitch\Poll.cpp |  | You must be logged in to cancel a poll!
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to find any polls
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Could not find an active poll
+builtin\twitch\Poll.cpp | QString( | Canceled poll: '%1'
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to cancel the poll - 
+builtin\twitch\Poll.cpp | channel->addSystemMessage( | Failed to query polls - 
+builtin\twitch\Prediction.cpp | oice2>" --duration <duration>[time unit] |  - Creates a prediction for users to guess among the defined options. Title may not exceed 45 characters. There must be between two and ten choices. Duration must be a positive integer; time unit (optional, default=s) must be one of s, m; maximum duration is 30 minutes.)
+builtin\twitch\Prediction.cpp | << | Error parsing command:
+builtin\twitch\Prediction.cpp |  | You must be logged in to create a prediction!
+builtin\twitch\Prediction.cpp | QString( | Created prediction: '%1'
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to create prediction - 
+builtin\twitch\Prediction.cpp |  | The /lockprediction command only works in Twitch channels
+builtin\twitch\Prediction.cpp |  | You must be logged in to lock a prediction!
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to find any predictions
+builtin\twitch\Prediction.cpp |  | The current prediction is already locked: 
+builtin\twitch\Prediction.cpp |  | Could not find an active prediction
+builtin\twitch\Prediction.cpp | QString( | Locked prediction with %1 points wagered by %2 users: '%3'
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to lock prediction - 
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to query predictions - 
+builtin\twitch\Prediction.cpp |  | The /cancelprediction command only works in Twitch channels
+builtin\twitch\Prediction.cpp |  | You must be logged in to cancel a prediction!
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to find any predictions
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Could not find an open prediction
+builtin\twitch\Prediction.cpp | QString( | Refunded %1 points to %2 users for prediction: '%3'
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to cancel prediction - 
+builtin\twitch\Prediction.cpp | channel->addSystemMessage( | Failed to query predictions - 
+builtin\twitch\Prediction.cpp | R | (Usage: /completeprediction --choice 
+builtin\twitch\Prediction.cpp | : /completeprediction --choice "<choice> |  or /completeprediction --index <index> - Selects a winner for an outstanding prediction. The choice title must exactly match the wording in the prediction. Alternatively, you may specify the one-based index of the winning outcome.)
+builtin\twitch\Prediction.cpp |  | The /completeprediction command only works in Twitch channels
+builtin\twitch\Prediction.cpp | {"c", "choice"}, | The prediction outcome to select as the winner
+builtin\twitch\Prediction.cpp |  | The one-based index of the prediction outcome to select as the winner
+builtin\twitch\Prediction.cpp |  | You may not specify choice and index simultaneously - 
+builtin\twitch\Prediction.cpp |  | You must specify either choice or index - 
+builtin\twitch\Prediction.cpp | ctx.channel->addSystemMessage( | Invalid index - 
+builtin\twitch\Prediction.cpp |  | You must start a prediction before you can complete one
+builtin\twitch\Prediction.cpp |  | Could not find an open prediction to complete
+builtin\twitch\Prediction.cpp | QString( | Specified index (%1) exceeds the number of outcomes (%2)
+builtin\twitch\Prediction.cpp |  | Could not find the desired winner. Options include: 
+builtin\twitch\Prediction.cpp | QString( | Completed prediction: %1 - '%2' won %3 points (%4 profit) to be distributed among %5 users
+builtin\twitch\Prediction.cpp |  | Failed to complete prediction - 
+builtin\twitch\Prediction.cpp |  | Failed to query predictions to complete - 
+builtin\twitch\Raid.cpp | QString errorMessage = QString( | Failed to start a raid - 
+builtin\twitch\Raid.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Raid.cpp | errorMessage += | You must be the broadcaster to start a raid.
+builtin\twitch\Raid.cpp | errorMessage += | A channel cannot raid itself.
+builtin\twitch\Raid.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Raid.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Raid.cpp | QString errorMessage = QString( | Failed to cancel the raid - 
+builtin\twitch\Raid.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Raid.cpp | errorMessage += | You must be the broadcaster to cancel the raid.
+builtin\twitch\Raid.cpp | errorMessage += | You don't have an active raid.
+builtin\twitch\Raid.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Raid.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Raid.cpp |  | The /raid command only works in Twitch channels.
+builtin\twitch\Raid.cpp |  | Usage: \"/raid <username>\" - Raid a user. Only the broadcaster can start a raid.
+builtin\twitch\Raid.cpp | ctx.channel->addSystemMessage( | You must be logged in to start a raid!
+builtin\twitch\Raid.cpp | QString( | Invalid username: %1
+builtin\twitch\Raid.cpp |  | The /unraid command only works in Twitch channels.
+builtin\twitch\Raid.cpp |  | Usage: \"/unraid\" - Cancel the current raid. Only the broadcaster can cancel the raid.
+builtin\twitch\Raid.cpp |  | You must be logged in to cancel the raid!
+builtin\twitch\RemoveModerator.cpp |  | The /unmod command only works in Twitch channels.
+builtin\twitch\RemoveModerator.cpp |  | Usage: \"/unmod <username>\" - Revoke moderator status from a user. Use \"/mods\" to list the moderators of this channel.
+builtin\twitch\RemoveModerator.cpp |  | You must be logged in to unmod someone!
+builtin\twitch\RemoveModerator.cpp | QString( | You have removed %1 as a moderator of this channel.
+builtin\twitch\RemoveModerator.cpp | QString( | Failed to remove channel moderator - 
+builtin\twitch\RemoveModerator.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\RemoveModerator.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\RemoveModerator.cpp |  | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\RemoveModerator.cpp | QString( | %1 is not a moderator of this channel.
+builtin\twitch\RemoveModerator.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\RemoveModerator.cpp | QString( | Invalid username: %1
+builtin\twitch\RemoveVIP.cpp |  | The /unvip command only works in Twitch channels.
+builtin\twitch\RemoveVIP.cpp |  | Usage: \"/unvip <username>\" - Revoke VIP status from a user. Use \"/vips\" to list the VIPs of this channel.
+builtin\twitch\RemoveVIP.cpp |  | You must be logged in to UnVIP someone!
+builtin\twitch\RemoveVIP.cpp | QString( | You have removed %1 as a VIP of this channel.
+builtin\twitch\RemoveVIP.cpp | QString errorMessage = QString( | Failed to remove VIP - 
+builtin\twitch\RemoveVIP.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\RemoveVIP.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\RemoveVIP.cpp |  | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\RemoveVIP.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\RemoveVIP.cpp | QString( | Invalid username: %1
+builtin\twitch\SendReply.cpp |  | The /reply command only works in Twitch channels.
+builtin\twitch\SendReply.cpp | ctx.channel->addSystemMessage( | Usage: /reply <username> <message>
+builtin\twitch\SendReply.cpp | ctx.channel->addSystemMessage( | A message from that user wasn't found.
+builtin\twitch\SendWhisper.cpp | QString errorMessage = | Failed to send whisper - 
+builtin\twitch\SendWhisper.cpp | errorMessage += | Due to Twitch restrictions, you are now required to have a verified phone number to send whispers. You can add a phone number in Twitch settings. https://www.twitch.tv/settings/security
+builtin\twitch\SendWhisper.cpp | errorMessage += | The recipient doesn't allow whispers from strangers or you directly.
+builtin\twitch\SendWhisper.cpp | errorMessage += | You cannot whisper yourself.
+builtin\twitch\SendWhisper.cpp | errorMessage += | You may only whisper a maximum of 40 unique recipients per day. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.
+builtin\twitch\SendWhisper.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\SendWhisper.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\SendWhisper.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\SendWhisper.cpp | ctx.channel->addSystemMessage( | Usage: /w <username> <message>
+builtin\twitch\SendWhisper.cpp |  | You must be logged in to send a whisper!
+builtin\twitch\SendWhisper.cpp | channel->addSystemMessage( | No user matching that username.
+builtin\twitch\ShieldMode.cpp | QStringLiteral( | The %1 command only works in Twitch channels.
+builtin\twitch\ShieldMode.cpp | QStringLiteral( | You must be logged in to use the %1 command.
+builtin\twitch\ShieldMode.cpp | channel->addSystemMessage( | Shield mode was deactivated.
+builtin\twitch\ShieldMode.cpp | channel->addSystemMessage( | Shield mode was activated.
+builtin\twitch\ShieldMode.cpp | QString errorMessage = | Failed to update shield mode - 
+builtin\twitch\ShieldMode.cpp |  | Missing required scope. Re-login with your account and try again.
+builtin\twitch\ShieldMode.cpp | errorMessage += | You must be a moderator of the channel.
+builtin\twitch\ShieldMode.cpp | QString( | An unknown error has occurred (%1).
+builtin\twitch\Shoutout.cpp |  | The /shoutout command only works in Twitch channels.
+builtin\twitch\Shoutout.cpp | channel->addSystemMessage( | You must be logged in to send shoutout.
+builtin\twitch\Shoutout.cpp | channel->addSystemMessage( | Usage: \"/shoutout <username>\" - Sends a shoutout to the specified twitch user
+builtin\twitch\Shoutout.cpp | QString( | Sent shoutout to %1
+builtin\twitch\Shoutout.cpp | QString errorMessage = | Failed to send shoutout - 
+builtin\twitch\Shoutout.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\Shoutout.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Shoutout.cpp |  | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Shoutout.cpp | errorMessage += | The broadcaster may not give themselves a Shoutout.
+builtin\twitch\Shoutout.cpp |  | The broadcaster is not streaming live or does not have one or more viewers.
+builtin\twitch\Shoutout.cpp | QString( | Invalid username: %1
+builtin\twitch\StartCommercial.cpp | QString errorMessage = | Failed to start commercial - 
+builtin\twitch\StartCommercial.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\StartCommercial.cpp | errorMessage += | Only the broadcaster of the channel can run commercials.
+builtin\twitch\StartCommercial.cpp | errorMessage += | You must be streaming live to run commercials.
+builtin\twitch\StartCommercial.cpp | errorMessage += | Command must include a desired commercial break length that is greater than zero.
+builtin\twitch\StartCommercial.cpp | errorMessage += | You must wait until your cooldown period expires before you can run another commercial.
+builtin\twitch\StartCommercial.cpp | QString( | An unknown error has occurred (%1).
+builtin\twitch\StartCommercial.cpp |  | The /commercial command only works in Twitch channels.
+builtin\twitch\StartCommercial.cpp | const auto *usageStr = | Usage: \"/commercial <length>\" - Starts a commercial with the specified duration for the current channel. Valid length options are 30, 60, 90, 120, 150, and 180 seconds.
+builtin\twitch\StartCommercial.cpp |  | You must be logged in to use the /commercial command.
+builtin\twitch\StartCommercial.cpp | QString( | Starting %1 second long commercial break. Keep in mind you are still live and not all viewers will receive a commercial. You may run another commercial in %2 seconds.
+builtin\twitch\Unban.cpp | QString errorMessage = QString( | Failed to unban user - 
+builtin\twitch\Unban.cpp | errorMessage += | There was a conflicting ban operation on this user. Please try again.
+builtin\twitch\Unban.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Unban.cpp | QString( | %1 is not banned from this channel.
+builtin\twitch\Unban.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Unban.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\Unban.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Unban.cpp | << | Error parsing command:
+builtin\twitch\Unban.cpp |  | You must be logged in to unban someone!
+builtin\twitch\Unban.cpp |  | Unban Action target username AND user ID may not be empty at the same time
+builtin\twitch\Unban.cpp |  | Unban Action channel username AND user ID may not be empty at the same time
+builtin\twitch\Unban.cpp | QString( | Failed to timeout, bad channel name: %1
+builtin\twitch\Unban.cpp | QString( | Failed to timeout, bad target name: %1
+builtin\twitch\Unban.cpp | QString( | Failed to timeout, bad username(s): %1
+builtin\twitch\UpdateChannel.cpp | QString errorMessage = QString( | Failed to set %1 - 
+builtin\twitch\UpdateChannel.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\UpdateChannel.cpp | errorMessage += QString( | You must be the broadcaster to set the %1.
+builtin\twitch\UpdateChannel.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\UpdateChannel.cpp | QString( | An unknown error has occurred (%1).
+builtin\twitch\UpdateChannel.cpp | ctx.channel->addSystemMessage( | Usage: /settitle <stream title>
+builtin\twitch\UpdateChannel.cpp |  | Unable to set title of non-Twitch channel.
+builtin\twitch\UpdateChannel.cpp | QString( | Updated title to %1
+builtin\twitch\UpdateChannel.cpp | ctx.channel->addSystemMessage( | Usage: /setgame <stream game>
+builtin\twitch\UpdateChannel.cpp |  | Unable to set game of non-Twitch channel.
+builtin\twitch\UpdateChannel.cpp | channel->addSystemMessage( | Game not found.
+builtin\twitch\UpdateChannel.cpp | QString( | Updated game to %1
+builtin\twitch\UpdateChannel.cpp | channel->addSystemMessage( | Failed to look up game.
+builtin\twitch\UpdateColor.cpp |  | The /color command only works in Twitch channels.
+builtin\twitch\UpdateColor.cpp |  | You must be logged in to use the /color command.
+builtin\twitch\UpdateColor.cpp | QString( | Usage: /color <color> - Color must be one of Twitch's supported colors (%1) or a hex code (#000000) if you have Turbo or Prime.
+builtin\twitch\UpdateColor.cpp | QString( | Your color has been changed to %1.
+builtin\twitch\UpdateColor.cpp | QString( | Failed to change color to %1 - 
+builtin\twitch\UpdateColor.cpp |  | Missing required scope. Re-login with your account and try again.
+builtin\twitch\UpdateColor.cpp | errorMessage += QString( | Color must be one of Twitch's supported colors (%1) or a hex code (#000000) if you have Turbo or Prime.
+builtin\twitch\UpdateColor.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Warn.cpp | QString errorMessage = QString( | Failed to warn user - 
+builtin\twitch\Warn.cpp | errorMessage += | There was a conflicting warn operation on this user. Please try again.
+builtin\twitch\Warn.cpp | errorMessage += | You are being ratelimited by Twitch. Try again in a few seconds.
+builtin\twitch\Warn.cpp | QString( | You cannot warn %1.
+builtin\twitch\Warn.cpp | errorMessage += | Missing required scope. Re-login with your account and try again.
+builtin\twitch\Warn.cpp | errorMessage += | You don't have permission to perform that action.
+builtin\twitch\Warn.cpp | errorMessage += | An unknown error has occurred.
+builtin\twitch\Warn.cpp |  "/warn [options...] <username> <reason> |  - Warn a user via their username. Reason is required and will be shown to the target user and other moderators. Options: --channel <channel> to override which channel the warn takes place in (can be specified multiple times).)
+builtin\twitch\Warn.cpp | << | Error parsing command:
+builtin\twitch\Warn.cpp | ctx.channel->addSystemMessage( | You must be logged in to warn someone!
+builtin\twitch\Warn.cpp |  | Failed to warn, you must specify a reason
+builtin\twitch\Warn.cpp |  | Warn Action target username AND user ID may not be empty at the same time
+builtin\twitch\Warn.cpp |  | Warn Action channel username AND user ID may not be empty at the same time
+builtin\twitch\Warn.cpp | QString( | Failed to warn, bad channel name: %1
+builtin\twitch\Warn.cpp | QString( | Failed to warn, bad target name: %1
+builtin\twitch\Warn.cpp | QString( | Failed to warn, bad username(s): %1
+UserInfoPopup.cpp | constexpr QStringView TEXT_FOLLOWERS = u | Followers: %1
+UserInfoPopup.cpp | constexpr QStringView TEXT_CREATED = u | Created: %1
+UserInfoPopup.cpp | constexpr QStringView TEXT_TITLE = u | %1's Usercard - #%2
+UserInfoPopup.cpp | nstexpr QStringView TEXT_UNAVAILABLE = u | (not available)
+UserInfoPopup.cpp | constexpr QStringView TEXT_PRONOUNS = u | Pronouns: %1
+UserInfoPopup.cpp |  | split being nullptr causes lots of bugs down the road
+UserInfoPopup.cpp | this->setWindowTitle( | Usercard
+UserInfoPopup.cpp | << | scrollPage hotkey called without arguments!
+UserInfoPopup.cpp | return | scrollPage hotkey called without arguments!
+UserInfoPopup.cpp | return | execModeratorAction action needs an argument, which moderation action to execute, see description in the editor
+UserInfoPopup.cpp | msg = QString( | /ban %1
+UserInfoPopup.cpp | msg = QString( | /unban %1
+UserInfoPopup.cpp | return QString( | Invalid argument for execModeratorAction: %1. Use \"ban\", \"unban\" or the number of the timeout button to execute
+UserInfoPopup.cpp | return QString( | Invalid argument for execModeratorAction: %1. Integer out of usable range: [1, %2]
+UserInfoPopup.cpp | msg = QString( | /timeout %1 %2
+UserInfoPopup.cpp | menu->addAction( | Open avatar in browser
+UserInfoPopup.cpp | menu->addAction( | Copy avatar link
+UserInfoPopup.cpp |  | Open channel in a new popup window
+UserInfoPopup.cpp |  | Open channel in a new tab
+UserInfoPopup.cpp | s->ui_.nameLabel = addCopyableLabel(box, | Copy name
+UserInfoPopup.cpp | addCopyableLabel(box, | Copy localized name
+UserInfoPopup.cpp | >ui_.userIDLabel = addCopyableLabel(box, | Copy ID
+UserInfoPopup.cpp | user.emplace<QCheckBox>( | Block
+UserInfoPopup.cpp | user.emplace<QCheckBox>( | Ignore highlights
+UserInfoPopup.cpp | user.emplace<LabelButton>( | Add notes
+UserInfoPopup.cpp | to usercard = user.emplace<LabelButton>( | Usercard
+UserInfoPopup.cpp | this->ui_.noMessagesLabel = new Label( | No recent messages
+UserInfoPopup.cpp | QString( | You successfully unblocked user %1
+UserInfoPopup.cpp | QString( | User %1 couldn't be unblocked, an unknown error occurred!
+UserInfoPopup.cpp | this, u | Blocking 
+UserInfoPopup.cpp | u | Blocking %1 can cause unintended side-effects like unfollowing.\n\n
+UserInfoPopup.cpp |  | Are you sure you want to block %1?
+UserInfoPopup.cpp | QString( | You successfully blocked user %1
+UserInfoPopup.cpp | QString( | User %1 couldn't be blocked, an unknown error occurred!
+UserInfoPopup.cpp | << | Unexpected check-state when blocking
+UserInfoPopup.cpp |  | Name matched by regex
+UserInfoPopup.cpp | << | Error getting followers:
+UserInfoPopup.cpp | << | Failed to get stream for user ID
+UserInfoPopup.cpp | this->ui_.ignoreHighlights->setToolTip( | Name matched by regex
+UserInfoPopup.cpp | this->ui_.followageLabel->setText( | ❤ Following since 
+UserInfoPopup.cpp |  | Subscription status hidden
+UserInfoPopup.cpp | QString( | ★ Tier %1 - Subscribed for %2 months
+UserInfoPopup.cpp | QString( | ★ Previously subscribed for %1 months
+UserInfoPopup.cpp | label->setStyleSheet( | color: #BBB
+UserInfoPopup.cpp | addButton(Unban, | Unban
+UserInfoPopup.cpp | addTimeouts( | Timeouts
+UserInfoPopup.cpp | addButton(Ban, | Ban

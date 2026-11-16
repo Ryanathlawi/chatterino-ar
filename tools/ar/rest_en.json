@@ -1,0 +1,453 @@
+{
+"Use /w <username> <message> to whisper": [
+"controllers\\commands\\CommandController.cpp"
+],
+"Twitch has removed the ability to follow users through third-party applications. For more information, see https://github.com/Chatterino/chatterino2/issues/3076": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Twitch has removed the ability to unfollow users through third-party applications. For more information, see https://github.com/Chatterino/chatterino2/issues/3076": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /requests [channel]. You can also use the command without arguments in any Twitch channel to open its channel points requests queue. Only the broadcaster and moderators have permission to view the queue.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /lowtrust [channel]. You can also use the command without arguments in any Twitch channel to open its suspicious user activity feed. Only the broadcaster and moderators have permission to view this feed.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /popout <channel>. You can also use the command without arguments in any Twitch channel to open its popout chat.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /openurl <URL> [--incognito/--no-incognito]": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Error: /openurl may only be called with --incognito or --no-incognito, not both at the same time.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"The /fakemsg command only works in Twitch channels.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /fakemsg (raw irc text) - injects raw irc text as if it was a message received from TMI": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"The /debug-update-to-no-stream command only works in Twitch channels": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"The /unstable-set-user-color command only works in Twitch channels.": [
+"controllers\\commands\\builtin\\Misc.cpp"
+],
+"Usage: /c2-set-logging-rules <rules...>. To enable debug logging for all categories from chatterino, use 'chatterino.*.debug=true'. For the format on the rules, see https://doc.qt.io/qt-6/qloggingcategory.html#configuring-categories": [
+"controllers\\commands\\builtin\\chatterino\\Debugging.cpp"
+],
+"Missing name": [
+"controllers\\commands\\builtin\\chatterino\\Debugging.cpp"
+],
+"Ignore command has been renamed to /block, please use it from now on as /ignore is going to be removed soon.": [
+"controllers\\commands\\builtin\\twitch\\Block.cpp"
+],
+"Unignore command has been renamed to /unblock, please use it from now on as /unignore is going to be removed soon.": [
+"controllers\\commands\\builtin\\twitch\\Block.cpp"
+],
+"The /test-chatters command only works in Twitch Channels.": [
+"controllers\\commands\\builtin\\twitch\\Chatters.cpp"
+],
+"You must be logged in to ": [
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp",
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp"
+],
+"Failed to ": [
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp",
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp"
+],
+"Failed to query user to ": [
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp",
+"controllers\\commands\\builtin\\twitch\\LowTrust.cpp"
+],
+"Manage Accounts": [
+"widgets\\AccountSwitchPopup.cpp"
+],
+"Chatter List - ": [
+"widgets\\ChatterListWidget.cpp"
+],
+"Loading...": [
+"widgets\\ChatterListWidget.cpp"
+],
+"Search User...": [
+"widgets\\ChatterListWidget.cpp"
+],
+"Moderators cannot check who is a moderator": [
+"widgets\\ChatterListWidget.cpp"
+],
+"Moderators cannot check who is a VIP": [
+"widgets\\ChatterListWidget.cpp"
+],
+"Pin Window": [
+"widgets\\DraggablePopup.cpp"
+],
+"Chatterino - التبويبات مخفية": [
+"widgets\\Notebook.cpp"
+],
+"Ok": [
+"widgets\\dialogs\\ChannelFilterEditorDialog.cpp",
+"widgets\\dialogs\\SelectChannelFiltersDialog.cpp",
+"widgets\\dialogs\\SettingsDialog.cpp",
+"widgets\\dialogs\\font\\FontDialog.cpp"
+],
+"Cancel": [
+"widgets\\dialogs\\ChannelFilterEditorDialog.cpp",
+"widgets\\dialogs\\SelectChannelFiltersDialog.cpp",
+"widgets\\dialogs\\font\\FontDialog.cpp"
+],
+"Channel Filter Creator": [
+"widgets\\dialogs\\ChannelFilterEditorDialog.cpp"
+],
+"Filter name": [
+"widgets\\dialogs\\ChannelFilterEditorDialog.cpp"
+],
+"My filter": [
+"widgets\\dialogs\\ChannelFilterEditorDialog.cpp"
+],
+"Add hotkey": [
+"widgets\\dialogs\\EditHotkeyDialog.cpp"
+],
+"Arguments wrapped in <> are required.": [
+"widgets\\dialogs\\EditHotkeyDialog.cpp"
+],
+"Insert a heading": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Make selected text bold": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Make selected text italic": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Insert a blockquote": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Insert a hyperlink": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Insert a bullet list item": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Editing notes for ": [
+"widgets\\dialogs\\EditUserNotesDialog.cpp"
+],
+"Search all emotes...": [
+"widgets\\dialogs\\EmotePopup.cpp"
+],
+"Emotes in #": [
+"widgets\\dialogs\\EmotePopup.cpp"
+],
+"Invalid account credentials": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Log in (Opens in browser)": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Paste login info": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Chatterino - unable to open in browser": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"User ID": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Client ID": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Add user": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Clear fields": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Add new account": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Basic": [
+"widgets\\dialogs\\LoginDialog.cpp"
+],
+"Chatterino - select stream quality": [
+"widgets\\dialogs\\QualityPopup.cpp"
+],
+"Subscribe to thread": [
+"widgets\\dialogs\\ReplyThreadPopup.cpp"
+],
+"Failed to restore file": [
+"widgets\\dialogs\\RestoreBackupsDialog.cpp"
+],
+"Shows when AutoMod catches a message in any channel you moderate.": [
+"widgets\\dialogs\\SelectChannelDialog.cpp"
+],
+"No filters defined": [
+"widgets\\dialogs\\SelectChannelFiltersDialog.cpp"
+],
+"Dismiss": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Failed to load version information.": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Downloading updates.\\n\\nChatterino will restart automatically when the download is done.": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Failed to download the update.": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Failed to save the update to disk.": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"The portable updater (expected in ": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Failed to run the updater.": [
+"widgets\\dialogs\\UpdateDialog.cpp"
+],
+"Chatterino quick setup": [
+"widgets\\dialogs\\WelcomeDialog.cpp"
+],
+"Apply": [
+"widgets\\dialogs\\font\\FontDialog.cpp"
+],
+"Pick Font": [
+"widgets\\dialogs\\font\\FontDialog.cpp"
+],
+"Preview": [
+"widgets\\dialogs\\font\\FontDialog.cpp"
+],
+"Font": [
+"widgets\\dialogs\\font\\FontFamilyWidget.cpp"
+],
+"Search...": [
+"widgets\\dialogs\\font\\FontFamilyWidget.cpp"
+],
+"Weight": [
+"widgets\\dialogs\\font\\FontWeightWidget.cpp"
+],
+"Jump to a channel or open a new one": [
+"widgets\\dialogs\\switcher\\QuickSwitcherPopup.cpp"
+],
+"Add": [
+"widgets\\helper\\EditableModelView.cpp"
+],
+"Remove": [
+"widgets\\helper\\EditableModelView.cpp"
+],
+"Move up": [
+"widgets\\helper\\EditableModelView.cpp"
+],
+"Move down": [
+"widgets\\helper\\EditableModelView.cpp"
+],
+"Font:": [
+"widgets\\helper\\FontSettingWidget.cpp"
+],
+"Rename Tab": [
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Close Tab": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Popup Tab": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Duplicate Tab": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Mark Tab as Unread on New Messages": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Close All Visible Tabs": [
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Are you sure you want to close all visible tabs?": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Close Visible Tabs to ": [
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Are you sure you want to close all visible tabs to the ": [
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Close Other Visible Tabs": [
+"widgets\\helper\\NotebookTab.cpp",
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Are you sure you want to close all other visible tabs?": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Name:": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Remove this tab": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Are you sure that you want to remove this tab?": [
+"widgets\\helper\\NotebookTab.cpp"
+],
+"Searching in ": [
+"widgets\\helper\\SearchPopup.cpp"
+],
+"Type to search": [
+"widgets\\helper\\SearchPopup.cpp"
+],
+"Hex:": [
+"widgets\\helper\\color\\ColorInput.cpp"
+],
+"Chatterino - رخصة ": [
+"widgets\\settingspages\\AboutPage.cpp"
+],
+"Streamlink أداة سطر أوامر تمرّر البث من خدمات مختلفة إلى مشغّل فيديو مثل VLC. تأكد إنك تعدّل ملف الإعدادات قبل لا تستخدمه!": [
+"widgets\\settingspages\\ExternalToolsPage.cpp"
+],
+"Path to folder where Streamlink executable can be found": [
+"widgets\\settingspages\\ExternalToolsPage.cpp"
+],
+"Shift": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Control": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Alt": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Tab layout": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Left": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Right": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Bottom": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Tab visibility": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Only live tabs": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Indefinite": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Default": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Message overflow": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Prevent": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Allow": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Username right-click behavior": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Mention": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Ignore": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Username right-click with modifier behavior": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Modifier for alternate right-click action": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Small": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Medium": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Large": [
+"widgets\\settingspages\\GeneralPage.cpp",
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Chatterino يرتبط بس بالمتصفحات المعروفة عشان ما يرتبط بنوافذ ثانية بالغلط.": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Extension;IDs;separated;by;semicolons": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Open AppData directory": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Select a search engine preset": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Restart on crash (requires restart)": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Username style": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Stack until timeout": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Don't stack": [
+"widgets\\settingspages\\GeneralPage.cpp"
+],
+"Users": [
+"widgets\\settingspages\\HighlightingPage.cpp",
+"widgets\\settingspages\\IgnoresPage.cpp"
+],
+"Badges": [
+"widgets\\settingspages\\HighlightingPage.cpp"
+],
+"Blacklisted Users": [
+"widgets\\settingspages\\HighlightingPage.cpp"
+],
+"Logs": [
+"widgets\\settingspages\\ModerationPage.cpp"
+],
+"Moderation buttons": [
+"widgets\\settingspages\\ModerationPage.cpp"
+],
+"User Timeout Buttons": [
+"widgets\\settingspages\\ModerationPage.cpp"
+],
+"Options": [
+"widgets\\settingspages\\NotificationPage.cpp"
+],
+"Selected Channels": [
+"widgets\\settingspages\\NotificationPage.cpp"
+],
+"Chatterino - ": [
+"widgets\\splits\\Split.cpp"
+],
+"Chatterino - Debug popup": [
+"widgets\\splits\\Split.cpp"
+],
+"Click to add a split": [
+"widgets\\splits\\SplitContainer.cpp"
+],
+"Reset /watching": [
+"widgets\\splits\\SplitHeader.cpp"
+],
+"Enable /mention tab highlights": [
+"widgets\\splits\\SplitHeader.cpp"
+]
+}

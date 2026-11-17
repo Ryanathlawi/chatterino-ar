@@ -18,6 +18,8 @@
 #include <functional>
 #include <span>
 
+class QPainter;
+
 namespace chatterino {
 
 class Button;
@@ -25,6 +27,7 @@ class PixmapButton;
 class Window;
 class DrawnButton;
 class NotebookTab;
+
 class SplitContainer;
 class Split;
 
@@ -241,6 +244,19 @@ private:
     // This filter, if set, is used to figure out the visibility of
     // the tabs in this notebook.
     TabVisibilityFilter tabVisibilityFilter_;
+
+    // Arabic build: "live" / "offline" sections in the vertical tab list,
+    // collapsible like folders in VS Code's explorer. Indexed by isLive.
+    struct SectionHeader {
+        QRect rect;
+        bool live;
+        int count;
+    };
+    std::vector<SectionHeader> headers_;
+    bool collapsed_[2] = {false, false};
+    int sectionCount_[2] = {0, 0};
+    bool groupsTabs() const;
+    void paintSectionHeaders(QPainter &painter);
 };
 
 class SplitNotebook : public Notebook

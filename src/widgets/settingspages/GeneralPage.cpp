@@ -218,6 +218,11 @@ void GeneralPage::initLayout(GeneralPageView &layout)
 
     SettingWidget::dropdown("شكل التبويبات", s.tabStyle)->addTo(layout);
 
+    SettingWidget::checkbox("رتّب القنوات اللايف فوق", s.groupLiveTabs)
+        ->setTooltip("في التبويبات الجانبية: قسم للقنوات اللايف فوق، وقسم "
+                     "لغير المتصلة تحت. اضغط على عنوان القسم تطويه أو تفتحه.")
+        ->addTo(layout);
+
     SettingWidget::checkbox("احسبني مشاهد في البث",
                             viewerpresence::enabledSetting())
         ->setTooltip("يسحب أقل جودة من بث القنوات الظاهرة قدامك بالخلفية "

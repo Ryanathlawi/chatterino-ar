@@ -222,6 +222,8 @@ public:
     FloatSetting boldScale = {"/appearance/boldScale", 63};
     BoolSetting showTabCloseButton = {"/appearance/showTabCloseButton", true};
     BoolSetting showTabLive = {"/appearance/showTabLiveButton", true};
+    // Arabic build: live channels first, in collapsible sections
+    BoolSetting groupLiveTabs = {"/arabic/groupLiveTabs", true};
     EnumStringSetting<TabStyle> tabStyle = {
         "/appearance/tabStyle",
         TabStyle::Normal,

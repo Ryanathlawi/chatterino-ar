@@ -86,6 +86,12 @@ Notebook::Notebook(QWidget *parent)
     this->lockNotebookLayoutAction_->setCheckable(true);
     this->lockNotebookLayoutAction_->setChecked(this->lockNotebookLayout_);
 
+    getSettings()->groupLiveTabs.connect(
+        [this] {
+            this->refresh();
+        },
+        this->signalHolder_, false);
+
     // Update lockNotebookLayout_ value anytime the user changes the checkbox state
     QObject::connect(this->lockNotebookLayoutAction_, &QAction::triggered,
                      [this](bool value) {
@@ -757,6 +763,24 @@ void Notebook::performLayout(bool animated)
         filteredItems.assign(this->items_.begin(), this->items_.end());
     }
 
+    this->headers_.clear();
+    if (this->groupsTabs())
+    {
+        this->sectionCount_[0] = this->sectionCount_[1] = 0;
+        for (const auto &item : filteredItems)
+        {
+            this->sectionCount_[item.tab->isLive()]++;
+        }
+        // live first; each section keeps the user's own order
+        std::ranges::stable_partition(filteredItems, [](const auto &item) {
+            return item.tab->isLive();
+        });
+        std::erase_if(filteredItems, [this](const auto &item) {
+            return this->collapsed_[item.tab->isLive()] &&
+                   !item.tab->isSelected();
+        });
+    }
+
     const auto scale = this->scale();
     const auto tabHeight = int(NOTEBOOK_TAB_HEIGHT * scale);
     const LayoutContext ctx{
@@ -991,8 +1015,71 @@ void Notebook::performVerticalLayout(const LayoutContext &ctx, bool animated)
     int count = ctx.items.size() + (this->showAddButton_ ? 1 : 0);
     int columnCount = ceil((float)count / tabsPerColumn);
 
+    if (this->showTabs_ && this->groupsTabs())
+    {
+        // one column: section header, then its tabs
+        int w = int(160 * this->scale());
+        for (const auto &item : ctx.items)
+        {
+            w = std::max(item.tab->normalTabWidth(), w);
+        }
+        if (this->showAddButton_)
+        {
+            w = std::max(w, this->addButton_->width());
+        }
+        if (isRight)
+        {
+            w = std::max(w, consumedButtonWidths - (this->width() - x));
+            x -= w + ctx.lineThickness;
+        }
+        else
+        {
+            w = std::max(w, consumedButtonWidths - x);
+        }
+
+        const int headerHeight = int(26 * this->scale());
+        size_t i = 0;
+        for (bool live : {true, false})
+        {
+            if (this->sectionCount_[live] == 0)
+            {
+                continue;
+            }
+            if (y != top)
+            {
+                y += int(6 * this->scale());
+            }
+            this->headers_.push_back({QRect(x, y, w, headerHeight), live,
+                                      this->sectionCount_[live]});
+            y += headerHeight;
+            for (; i < ctx.items.size() && ctx.items[i].tab->isLive() == live;
+                 i++)
+            {
+                auto *tab = ctx.items[i].tab;
+                tab->growWidth(w);
+                tab->moveAnimated(QPoint(x, y), animated);
+                tab->setInLastRow(true);
+                y += ctx.tabHeight + ctx.tabSpacer;
+            }
+        }
+
+        if (this->showAddButton_)
+        {
+            int m = int(4 * this->scale());
+            int h = this->addButton_->height();
+            this->addButton_->setFixedWidth(w - 2 * m);
+            this->addButton_->move(x + m, this->height() - h - 2 * m);
+        }
+
+        if (!isRight)
+        {
+            x += w + ctx.lineThickness;
+        }
+        y = top;
+        this->update();
+    }
     // only add width of all the tabs if they are not hidden
-    if (this->showTabs_)
+    else if (this->showTabs_)
     {
         for (int col = 0; col < columnCount; col++)
         {
@@ -1112,6 +1199,19 @@ void Notebook::mousePressEvent(QMouseEvent *event)
 {
     this->update();
 
+    if (event->button() == Qt::LeftButton)
+    {
+        for (const auto &h : this->headers_)
+        {
+            if (h.rect.contains(event->pos()))
+            {
+                this->collapsed_[h.live] = !this->collapsed_[h.live];
+                this->refresh();
+                return;
+            }
+        }
+    }
+
     switch (event->button())
     {
         case Qt::RightButton: {
@@ -1184,6 +1284,90 @@ void Notebook::paintEvent(QPaintEvent *event)
         painter.fillRect(this->lineOffset_, 0, int(2 * scale), this->height(),
                          this->theme->tabs.dividerLine);
     }
+
+    this->paintSectionHeaders(painter);
+}
+
+bool Notebook::groupsTabs() const
+{
+    return this->showTabs_ && getSettings()->groupLiveTabs &&
+           (this->tabLocation_ == NotebookTabLocation::Left ||
+            this->tabLocation_ == NotebookTabLocation::Right);
+}
+
+void Notebook::paintSectionHeaders(QPainter &painter)
+{
+    const auto scale = this->scale();
+    const bool rtl = this->layoutDirection() == Qt::RightToLeft;
+    const QColor muted(0x8b, 0x8b, 0x96);
+    const int pad = int(12 * scale);
+    const int c = int(4 * scale);  // chevron half-size
+
+    QFont font = this->font();
+    font.setPointSizeF(font.pointSizeF() * 0.85);
+    font.setWeight(QFont::Bold);
+    painter.setFont(font);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    for (const auto &h : this->headers_)
+    {
+        const QRect r = h.rect.adjusted(pad, 0, -pad, 0);
+        const int cy = r.center().y();
+        const int cx = rtl ? r.right() - c : r.left() + c;
+        const int dir = rtl ? -1 : 1;  // reading direction
+
+        // chevron: down when open, pointing along the text when collapsed
+        painter.setPen(QPen(muted, 1.6 * scale, Qt::SolidLine, Qt::RoundCap,
+                            Qt::RoundJoin));
+        QPolygonF chevron;
+        if (this->collapsed_[h.live])
+        {
+            chevron << QPointF(cx - dir * c / 2.0, cy - c)
+                    << QPointF(cx + dir * c / 2.0, cy)
+                    << QPointF(cx - dir * c / 2.0, cy + c);
+        }
+        else
+        {
+            chevron << QPointF(cx - c, cy - c / 2.0)
+                    << QPointF(cx, cy + c / 2.0)
+                    << QPointF(cx + c, cy - c / 2.0);
+        }
+        painter.drawPolyline(chevron);
+
+        // label after the chevron; live gets a red dot first
+        int start = 3 * c;
+        if (h.live)
+        {
+            const int d = int(6 * scale);
+            const int dx = rtl ? r.right() - start - d / 2
+                               : r.left() + start + d / 2;
+            painter.setPen(Qt::NoPen);
+            painter.setBrush(QColor(0xf0, 0x47, 0x47));
+            painter.drawEllipse(QPoint(dx, cy), d / 2, d / 2);
+            start += d + int(5 * scale);
+        }
+        QRect label = rtl ? r.adjusted(0, 0, -start, 0)
+                          : r.adjusted(start, 0, 0, 0);
+        painter.setPen(muted);
+        painter.drawText(label,
+                         Qt::AlignVCenter | Qt::AlignAbsolute |
+                             (rtl ? Qt::AlignRight : Qt::AlignLeft),
+                         h.live ? "مباشر" : "غير متصل");
+
+        // count pill on the far side
+        const QString n = QString::number(h.count);
+        const int pw =
+            std::max(painter.fontMetrics().horizontalAdvance(n) +
+                         int(10 * scale),
+                     int(20 * scale));
+        const int ph = int(16 * scale);
+        QRect pill(rtl ? r.left() : r.right() - pw, cy - ph / 2, pw, ph);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QColor(0x1f, 0x1f, 0x26));
+        painter.drawRoundedRect(pill, ph / 2.0, ph / 2.0);
+        painter.setPen(QColor(0xc9, 0xc9, 0xd1));
+        painter.drawText(pill, Qt::AlignCenter, n);
+    }
 }
 
 bool Notebook::isNotebookLayoutLocked() const
@@ -1250,6 +1434,12 @@ void Notebook::setTabVisibilityFilter(TabVisibilityFilter filter)
 bool Notebook::shouldShowTab(const NotebookTab *tab) const
 {
     if (!this->showTabs_)
+    {
+        return false;
+    }
+
+    if (this->groupsTabs() && this->collapsed_[tab->isLive()] &&
+        !tab->isSelected())
     {
         return false;
     }

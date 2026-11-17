@@ -41,7 +41,7 @@ void masterPlaylistUrl(const QString &login, QObject *ctx,
 {
     QJsonObject vars{{"isLive", true},     {"login", login},
                      {"isVod", false},     {"vodID", ""},
-                     {"playerType", "site"}};
+                     {"playerType", "embed"}};  // "site" gets stitched ads, "embed" does not
     QJsonObject body{
         {"operationName", "PlaybackAccessToken_Template"},
         {"query",

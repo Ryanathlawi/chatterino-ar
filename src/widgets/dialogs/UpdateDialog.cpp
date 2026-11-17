@@ -37,7 +37,7 @@ UpdateDialog::UpdateDialog()
             return "Yes";
         }
 
-        return "Install";
+        return "تحميل";
     }();
     auto *install =
         buttons->addButton(installText, QDialogButtonBox::AcceptRole);

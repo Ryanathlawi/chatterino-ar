@@ -50,10 +50,16 @@ const QString CHATTERINO_OS = u"unknown"_s;
 
 namespace chatterino {
 
+// Arabic build: versioned and released separately on GitHub. Bump this and
+// tag the release "v<AR_VERSION>" together.
+const QString AR_VERSION = u"1.1.0"_s;
+const QString AR_RELEASES_API =
+    u"https://api.github.com/repos/Ryanathlawi/chatterino-ar/releases/latest"_s;
+
 Updates::Updates(const Paths &paths_, Settings &settings)
     : paths(paths_)
-    , currentVersion_(CHATTERINO_VERSION)
-    , updateGuideLink_("https://chatterino.com")
+    , currentVersion_(AR_VERSION)
+    , updateGuideLink_("https://github.com/Ryanathlawi/chatterino-ar/releases/latest")
 {
     qCDebug(chatterinoUpdate) << "init UpdateManager";
 
@@ -121,6 +127,13 @@ void Updates::installUpdates()
     if (this->status_ != UpdateAvailable)
     {
         assert(false);
+        return;
+    }
+
+    // Arabic build: releases are zips on GitHub; open the release page.
+    QDesktopServices::openUrl(this->updateGuideLink_);
+    if (true)
+    {
         return;
     }
 
@@ -330,74 +343,31 @@ void Updates::checkForUpdates()
         return;
     }
 
-    QString url = "https://notitia.chatterino.com/version/chatterino/" %
-                  CHATTERINO_OS % "/" % currentBranch();
-
-    NetworkRequest(url)
+    NetworkRequest(AR_RELEASES_API)
         .timeout(60000)
         .onSuccess([this](auto result) {
             const auto object = result.parseJson();
-            /// Version available on every platform
-            auto version = object["version"];
-
-            if (!version.isString())
+            auto tag = object["tag_name"].toString();
+            if (tag.isEmpty())
             {
                 this->setStatus_(SearchFailed);
                 qCDebug(chatterinoUpdate)
-                    << "error checking version - missing 'version'" << object;
+                    << "error checking version - missing 'tag_name'" << object;
                 return;
             }
-
-#    if defined Q_OS_WIN || defined Q_OS_MACOS
-            /// Downloads an installer for the new version
-            auto updateExeUrl = object["updateexe"];
-            if (!updateExeUrl.isString())
+            this->onlineVersion_ = tag.startsWith('v') ? tag.mid(1) : tag;
+            auto page = object["html_url"].toString();
+            if (!page.isEmpty())
             {
-                this->setStatus_(SearchFailed);
-                qCDebug(chatterinoUpdate)
-                    << "error checking version - missing 'updateexe'" << object;
-                return;
+                this->updateGuideLink_ = page;
             }
-            this->updateExe_ = updateExeUrl.toString();
 
-#        ifdef Q_OS_WIN
-            /// Windows portable
-            auto portableUrl = object["portable_download"];
-            if (!portableUrl.isString())
-            {
-                this->setStatus_(SearchFailed);
-                qCDebug(chatterinoUpdate)
-                    << "error checking version - missing 'portable_download'"
-                    << object;
-                return;
-            }
-            this->updatePortable_ = portableUrl.toString();
-#        endif
-
-#    elif defined Q_OS_LINUX
-            QJsonValue updateGuide = object.value("updateguide");
-            if (updateGuide.isString())
-            {
-                this->updateGuideLink_ = updateGuide.toString();
-            }
-#    else
-            return;
-#    endif
-
-            /// Current version
-            this->onlineVersion_ = version.toString();
-
-            /// Update available :)
-            if (this->currentVersion_ != this->onlineVersion_)
-            {
-                this->setStatus_(UpdateAvailable);
-                this->isDowngrade_ = Updates::isDowngradeOf(
-                    this->onlineVersion_, this->currentVersion_);
-            }
-            else
-            {
-                this->setStatus_(NoUpdateAvailable);
-            }
+            // only offer real upgrades
+            bool newer = this->currentVersion_ != this->onlineVersion_ &&
+                         Updates::isDowngradeOf(this->currentVersion_,
+                                                this->onlineVersion_);
+            this->isDowngrade_ = false;
+            this->setStatus_(newer ? UpdateAvailable : NoUpdateAvailable);
         })
         .execute();
     this->setStatus_(Searching);
@@ -454,37 +424,10 @@ bool Updates::isDowngrade() const
 
 QString Updates::buildUpdateAvailableText() const
 {
-    const auto &version = Version::instance();
-
-    if (version.isNightly())
-    {
-        // Since Nightly builds can be installed in many different ways, we ask the user to download the update manually.
-        if (this->isDowngrade())
-        {
-            return QString("The version online (%1) seems to be lower than the "
-                           "current (%2).\nEither a version was reverted or "
-                           "you are running a newer build.\n\nDo you want to "
-                           "head to Chatterino.com to download it?")
-                .arg(this->getOnlineVersion(), this->getCurrentVersion());
-        }
-
-        return QString("An update (%1) is available.\n\nDo you want to head to "
-                       "Chatterino.com to download the new update?")
-            .arg(this->getOnlineVersion());
-    }
-
-    if (this->isDowngrade())
-    {
-        return QString("The version online (%1) seems to be lower than the "
-                       "current (%2).\nEither a version was reverted or "
-                       "you are running a newer build.\n\nDo you want to "
-                       "download and install it?")
-            .arg(this->getOnlineVersion(), this->getCurrentVersion());
-    }
-
-    return QString("An update (%1) is available.\n\nDo you want to "
-                   "download and install it?")
-        .arg(this->getOnlineVersion());
+    return QString("فيه تحديث جديد (%1)، وأنت على %2.\n\n"
+                   "اضغط «تحميل» تفتح لك صفحة التحميل، نزّل الملف "
+                   "وبدّل المجلد القديم بالجديد. إعداداتك ما تضيع.")
+        .arg(this->getOnlineVersion(), this->getCurrentVersion());
 }
 
 void Updates::setStatus_(Status status)

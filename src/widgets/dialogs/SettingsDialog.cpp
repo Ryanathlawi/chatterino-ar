@@ -30,6 +30,7 @@
 #include "widgets/settingspages/PluginsPage.hpp"
 
 #include <QDialogButtonBox>
+#include <QVideoWidget>
 #include <QFile>
 #include <QLineEdit>
 
@@ -37,6 +38,21 @@ namespace chatterino {
 
 namespace {
 QWidget *settingsOverlay = nullptr;
+
+// Video widgets render in their own native window, which would draw on top of
+// the overlay. Collapse them while settings are open (hide/show would detach
+// that native window into stray top-level windows).
+void coverVideos(bool cover)
+{
+    if (auto *host = settingsOverlay->parentWidget())
+    {
+        for (auto *v : host->findChildren<QVideoWidget *>())
+        {
+            v->setMaximumHeight(cover ? 0 : QWIDGETSIZE_MAX);
+        }
+    }
+}
+
 }  // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent)
@@ -420,6 +436,7 @@ void SettingsDialog::showDialog(QWidget *parent,
         default:;
     }
 
+    coverVideos(true);
     settingsOverlay->show();
     settingsOverlay->raise();
     if (preferredTab == SettingsDialogPreference::StreamerMode)
@@ -483,6 +500,7 @@ void SettingsDialog::onOkClicked()
 
     this->close();
     settingsOverlay->hide();
+    coverVideos(false);
 }
 
 void SettingsDialog::onCancelClicked()
@@ -491,6 +509,7 @@ void SettingsDialog::onCancelClicked()
 
     this->close();
     settingsOverlay->hide();
+    coverVideos(false);
 }
 
 }  // namespace chatterino

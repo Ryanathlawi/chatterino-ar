@@ -89,10 +89,21 @@ StreamPlayer::StreamPlayer(QWidget *parent)
                          this->audio_->setMuted(!this->audio_->isMuted());
                          updateMute();
                      });
-    QObject::connect(hide, &QPushButton::clicked, this, [this] {
-        this->dismissed_ = true;
-        this->stop();
-        this->setLive(false);
+    // hiding keeps a thin bar so the stream can be brought back
+    QObject::connect(hide, &QPushButton::clicked, this, [this, hide] {
+        this->dismissed_ = !this->dismissed_;
+        hide->setText(this->dismissed_ ? "إظهار البث" : "إخفاء البث");
+        this->video_->setVisible(!this->dismissed_);
+        this->muteButton_->setVisible(!this->dismissed_);
+        if (this->dismissed_)
+        {
+            this->stop();
+            this->updateHeight();
+        }
+        else
+        {
+            this->load();
+        }
     });
     // stream ended / network hiccup: try again later
     QObject::connect(this->player_, &QMediaPlayer::errorOccurred, this, [this] {
@@ -114,7 +125,6 @@ void StreamPlayer::setChannelName(const QString &login)
         return;
     }
     this->login_ = login;
-    this->dismissed_ = false;
     this->stop();
     this->setLive(false);
     if (this->isVisible())
@@ -186,7 +196,9 @@ void StreamPlayer::setLive(bool live)
 
 void StreamPlayer::updateHeight()
 {
-    int h = this->live_ ? std::min(this->width() * 9 / 16 + 34, 300) : 0;
+    int h = this->dismissed_ ? this->bar_->sizeHint().height()
+            : this->live_    ? std::min(this->width() * 9 / 16 + 34, 300)
+                             : 0;
     this->setFixedHeight(h);
 }
 

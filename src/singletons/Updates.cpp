@@ -57,7 +57,7 @@ namespace chatterino {
 
 // Arabic build: versioned and released separately on GitHub. Bump this and
 // tag the release "v<AR_VERSION>" together.
-const QString AR_VERSION = u"1.3.0"_s;
+const QString AR_VERSION = u"1.3.1"_s;
 const QString AR_RELEASES_API =
     u"https://api.github.com/repos/Ryanathlawi/chatterino-ar/releases/latest"_s;
 

@@ -22,9 +22,15 @@
 #include "providers/twitch/ViewerPresence.hpp"
 #include "singletons/WindowManager.hpp"
 #include "widgets/Window.hpp"
+#include "common/Channel.hpp"
+#include "widgets/splits/Split.hpp"
+#include "widgets/Notebook.hpp"
 
 #include <QApplication>
 #include <QElapsedTimer>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProcess>
 #include <QGuiApplication>
 #include <QPainter>
 #include <QScreen>
@@ -260,6 +266,103 @@ void showSplash()
     s->show();
 }
 
+// Arabic build: someone coming from the portable Chatterino has their
+// channels in <old folder>/Settings, not in AppData where we look. If we
+// start with no channels, offer once to bring them over.
+void offerImport(const Paths &paths)
+{
+    if (getSettings()->importOffered)
+    {
+        return;
+    }
+    int channels = 0;
+    getApp()->getWindows()->getMainWindow().getNotebook().forEachSplit(
+        [&](Split *split) {
+            channels += split->getChannel()->getName().isEmpty() ? 0 : 1;
+        });
+    if (channels > 0)
+    {
+        getSettings()->importOffered = true;
+        return;
+    }
+
+    auto *main = &getApp()->getWindows()->getMainWindow();
+    QMessageBox ask(QMessageBox::Question, "قنواتك القديمة",
+                    "ما لقينا أي قناة محفوظة.\n\nإذا كنت تستخدم شاترينو "
+                    "قبل، اختر مجلده وننقل قنواتك منه.",
+                    QMessageBox::NoButton, main);
+    auto *pick = ask.addButton("اختيار المجلد", QMessageBox::AcceptRole);
+    ask.addButton("لا، شكرًا", QMessageBox::RejectRole);
+    ask.exec();
+    getSettings()->importOffered = true;
+    if (ask.clickedButton() != pick)
+    {
+        return;
+    }
+
+    QString found;
+    for (QString dir = QFileDialog::getExistingDirectory(
+             main, "اختر مجلد شاترينو القديم");
+         !dir.isEmpty();
+         dir = QFileDialog::getExistingDirectory(
+             main, "اختر مجلد شاترينو القديم"))
+    {
+        for (const auto *rel : {"Settings/window-layout.json",
+                                "window-layout.json",
+                                "Chatterino2/Settings/window-layout.json"})
+        {
+            if (QFile::exists(dir + "/" + rel))
+            {
+                found = dir + "/" + rel;
+                break;
+            }
+        }
+        if (!found.isEmpty())
+        {
+            break;
+        }
+        QMessageBox::warning(main, "قنواتك القديمة",
+                             "ما لقينا قنوات في هذا المجلد. اختر المجلد "
+                             "اللي فيه chatterino.exe القديم.");
+    }
+    if (found.isEmpty())
+    {
+        return;
+    }
+
+    // The layout is saved again on exit, so copy it in after we have quit,
+    // then start again.
+    const QString script =
+        "param($src, $dst, $procId, $exe)\n"
+        "try { Wait-Process -Id $procId -Timeout 30 -ErrorAction "
+        "SilentlyContinue } catch {}\n"
+        "Copy-Item -LiteralPath $src -Destination $dst -Force\n"
+        "Start-Process -FilePath $exe\n"
+        "Remove-Item -LiteralPath $PSCommandPath -Force -ErrorAction "
+        "SilentlyContinue\n";
+    const QString scriptPath = QDir::tempPath() + "/ChatterinoAR-import.ps1";
+    QFile sf(scriptPath);
+    if (!sf.open(QIODevice::WriteOnly | QIODevice::Text) ||
+        sf.write(script.toUtf8()) < 0)
+    {
+        return;
+    }
+    sf.close();
+    QMessageBox::information(main, "قنواتك القديمة",
+                             "لقينا قنواتك. البرنامج بيسكّر ويفتح من جديد "
+                             "وهي فيه.");
+    QProcess::startDetached(
+        "powershell.exe",
+        {"-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
+         "-File", QDir::toNativeSeparators(scriptPath),
+         QDir::toNativeSeparators(found),
+         QDir::toNativeSeparators(paths.settingsDirectory +
+                                  "/window-layout.json"),
+         QString::number(QCoreApplication::applicationPid()),
+         QDir::toNativeSeparators(QCoreApplication::applicationFilePath())});
+    QApplication::quit();
+}
+
 void showLastCrashDialog(const Args &args, const Paths &paths)
 {
     auto *dialog = new LastRunCrashDialog(args, paths);
@@ -437,6 +540,9 @@ void runGui(QApplication &a, const Paths &paths, Settings &settings,
     app.initialize(settings, paths);
     showSplash();
     viewerpresence::start();
+    QTimer::singleShot(2200, [&paths] {
+        offerImport(paths);
+    });
     app.run();
 
     chatterino::NetworkManager::deinit();

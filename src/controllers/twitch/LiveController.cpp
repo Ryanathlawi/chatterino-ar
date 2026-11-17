@@ -9,7 +9,13 @@
 #include "providers/twitch/TwitchChannel.hpp"
 #include "util/Helpers.hpp"
 
+#include <QApplication>
 #include <QDebug>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 namespace {
 
@@ -19,6 +25,60 @@ const auto &LOG = chatterinoTwitchLiveController;
 }  // namespace
 
 namespace chatterino {
+
+namespace {
+
+// Arabic build: Helix needs a login, so signed-out users never learned who
+// is live. Twitch's public GQL answers the same question without one.
+void fetchStreamsGql(
+    const QStringList &ids,
+    const std::function<void(const std::vector<HelixStream> &)> &done)
+{
+    static auto *nam = new QNetworkAccessManager(qApp);
+    QJsonObject body{
+        {"query", "query($ids:[ID!]){users(ids:$ids){id stream{id title "
+                  "viewersCount createdAt type game{id name}}}}"},
+        {"variables",
+         QJsonObject{{"ids", QJsonArray::fromStringList(ids)}}}};
+    QNetworkRequest req(QUrl("https://gql.twitch.tv/gql"));
+    req.setRawHeader("Client-ID", "kimne78kx3ncx6brgo4mv6wki5h1ko");
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    auto *reply =
+        nam->post(req, QJsonDocument(body).toJson(QJsonDocument::Compact));
+    QObject::connect(reply, &QNetworkReply::finished, qApp, [reply, done] {
+        reply->deleteLater();
+        if (reply->error() != QNetworkReply::NoError)
+        {
+            qCWarning(LOG) << "Failed GQL stream check request";
+            return;
+        }
+        std::vector<HelixStream> streams;
+        auto users = QJsonDocument::fromJson(reply->readAll())["data"]["users"]
+                         .toArray();
+        for (const auto &u : users)
+        {
+            auto user = u.toObject();
+            auto s = user["stream"].toObject();
+            if (s.isEmpty())
+            {
+                continue;
+            }
+            HelixStream h;
+            h.id = s["id"].toString();
+            h.userId = user["id"].toString();
+            h.title = s["title"].toString();
+            h.viewerCount = s["viewersCount"].toInt();
+            h.startedAt = s["createdAt"].toString();
+            h.type = s["type"].toString();
+            h.gameId = s["game"].toObject()["id"].toString();
+            h.gameName = s["game"].toObject()["name"].toString();
+            streams.push_back(h);
+        }
+        done(streams);
+    });
+}
+
+}  // namespace
 
 TwitchLiveController::TwitchLiveController()
 {
@@ -99,10 +159,8 @@ void TwitchLiveController::request(std::optional<QStringList> optChannelIDs)
 
     for (const auto &batch : batches)
     {
-        // TODO: Explore making this concurrent
-        getHelix()->fetchStreams(
-            batch, {},
-            [this, batch{batch}](const auto &streams) {
+        auto applyStreams = [this, batch{batch}](
+                                const std::vector<HelixStream> &streams) {
                 std::unordered_map<QString, std::optional<HelixStream>> results;
 
                 for (const auto &channelID : batch)
@@ -146,9 +204,13 @@ void TwitchLiveController::request(std::optional<QStringList> optChannelIDs)
                         this->channels.erase(deadChannel);
                     }
                 }
-            },
-            [] {
-                qCWarning(LOG) << "Failed stream check request";
+        };
+
+        // TODO: Explore making this concurrent
+        getHelix()->fetchStreams(
+            batch, {}, applyStreams,
+            [applyStreams, batch{batch}] {
+                fetchStreamsGql(batch, applyStreams);
             },
             [] {});
 

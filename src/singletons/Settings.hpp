@@ -224,6 +224,8 @@ public:
     BoolSetting showTabLive = {"/appearance/showTabLiveButton", true};
     // Arabic build: live channels first, in collapsible sections
     BoolSetting groupLiveTabs = {"/arabic/groupLiveTabs", true};
+    // Arabic build: the "import channels from old Chatterino" prompt was shown
+    BoolSetting importOffered = {"/arabic/importOffered", false};
     EnumStringSetting<TabStyle> tabStyle = {
         "/appearance/tabStyle",
         TabStyle::Normal,

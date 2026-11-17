@@ -17,6 +17,11 @@
 
 #include <QApplication>
 #include <QDesktopServices>
+#include <QDir>
+#include <QFile>
+#include <QJsonArray>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QMessageBox>
 #include <QProcess>
 #include <QRegularExpression>
@@ -52,7 +57,7 @@ namespace chatterino {
 
 // Arabic build: versioned and released separately on GitHub. Bump this and
 // tag the release "v<AR_VERSION>" together.
-const QString AR_VERSION = u"1.2.0"_s;
+const QString AR_VERSION = u"1.3.0"_s;
 const QString AR_RELEASES_API =
     u"https://api.github.com/repos/Ryanathlawi/chatterino-ar/releases/latest"_s;
 
@@ -130,7 +135,81 @@ void Updates::installUpdates()
         return;
     }
 
-    // Arabic build: releases are zips on GitHub; open the release page.
+#ifdef Q_OS_WIN
+    // Arabic build: download the release zip, then a small PowerShell script
+    // swaps the files in once we have exited and starts the new version.
+    if (!this->updatePortable_.isEmpty())
+    {
+        static auto *nam = new QNetworkAccessManager(qApp);
+        this->downloadPercent_ = 0;
+        this->setStatus_(Downloading);
+        auto *reply = nam->get(QNetworkRequest(QUrl(this->updatePortable_)));
+        QObject::connect(
+            reply, &QNetworkReply::downloadProgress, qApp,
+            [this](qint64 got, qint64 total) {
+                int p = total > 0 ? int(got * 100 / total) : 0;
+                if (p != this->downloadPercent_)
+                {
+                    this->downloadPercent_ = p;
+                    this->statusUpdated.invoke(Downloading);
+                }
+            });
+        QObject::connect(reply, &QNetworkReply::finished, qApp, [this, reply] {
+            reply->deleteLater();
+            if (reply->error() != QNetworkReply::NoError)
+            {
+                this->setStatus_(DownloadFailed);
+                return;
+            }
+            const QString zip = QDir::tempPath() + "/ChatterinoAR-update.zip";
+            const QString script = QDir::tempPath() + "/ChatterinoAR-update.ps1";
+            QFile zf(zip);
+            QFile sf(script);
+            if (!zf.open(QIODevice::WriteOnly) ||
+                zf.write(reply->readAll()) < 0 ||
+                !sf.open(QIODevice::WriteOnly | QIODevice::Text) ||
+                sf.write(
+        "param($zip, $dir, $procId, $exe)\n"
+        "try { Wait-Process -Id $procId -Timeout 30 -ErrorAction SilentlyContinue } catch {}\n"
+        "$tmp = Join-Path $env:TEMP 'ChatterinoAR-update'\n"
+        "Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue\n"
+        "Expand-Archive -LiteralPath $zip -DestinationPath $tmp -Force\n"
+        "$src = Join-Path $tmp 'Chatterino-AR'\n"
+        "if (-not (Test-Path $src)) { $src = $tmp }\n"
+        "for ($i = 0; $i -lt 10; $i++) {\n"
+        "  try { Copy-Item -Path (Join-Path $src '*') -Destination $dir -Recurse -Force -ErrorAction Stop; break }\n"
+        "  catch { Start-Sleep -Milliseconds 500 }\n"
+        "}\n"
+        "Remove-Item $tmp, $zip -Recurse -Force -ErrorAction SilentlyContinue\n"
+        "Start-Process -FilePath $exe\n"
+        "Remove-Item -LiteralPath $PSCommandPath -Force -ErrorAction SilentlyContinue\n") < 0)
+            {
+                this->setStatus_(WriteFileFailed);
+                return;
+            }
+            zf.close();
+            sf.close();
+            bool started = QProcess::startDetached(
+                "powershell.exe",
+                {"-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle",
+                 "Hidden", "-File", QDir::toNativeSeparators(script),
+                 QDir::toNativeSeparators(zip),
+                 QDir::toNativeSeparators(QCoreApplication::applicationDirPath()),
+                 QString::number(QCoreApplication::applicationPid()),
+                 QDir::toNativeSeparators(
+                     QCoreApplication::applicationFilePath())});
+            if (!started)
+            {
+                this->setStatus_(RunUpdaterFailed);
+                return;
+            }
+            QApplication::quit();
+        });
+        return;
+    }
+#endif
+
+    // no zip found: open the release page instead
     QDesktopServices::openUrl(this->updateGuideLink_);
     if (true)
     {
@@ -361,6 +440,16 @@ void Updates::checkForUpdates()
             {
                 this->updateGuideLink_ = page;
             }
+            for (const auto &asset : object["assets"].toArray())
+            {
+                auto a = asset.toObject();
+                if (a["name"].toString().endsWith(".zip"))
+                {
+                    this->updatePortable_ =
+                        a["browser_download_url"].toString();
+                    break;
+                }
+            }
 
             // only offer real upgrades
             bool newer = this->currentVersion_ != this->onlineVersion_ &&
@@ -424,10 +513,15 @@ bool Updates::isDowngrade() const
 
 QString Updates::buildUpdateAvailableText() const
 {
-    return QString("فيه تحديث جديد (%1)، وأنت على %2.\n\n"
-                   "اضغط «تحميل» تفتح لك صفحة التحميل، نزّل الملف "
-                   "وبدّل المجلد القديم بالجديد. إعداداتك ما تضيع.")
+    return QString("فيه تحديث جديد (%1)، وأنت على %2."
+                   "\n\nاضغط «تحديث» وينزل لحاله، وبعدها البرنامج يسكّر "
+                   "ويفتح نفسه على النسخة الجديدة. إعداداتك ما تضيع.")
         .arg(this->getOnlineVersion(), this->getCurrentVersion());
+}
+
+int Updates::downloadPercent() const
+{
+    return this->downloadPercent_;
 }
 
 void Updates::setStatus_(Status status)

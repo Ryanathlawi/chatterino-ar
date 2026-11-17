@@ -62,6 +62,9 @@ public:
     /// Generates the string that the update dialog will show.
     QString buildUpdateAvailableText() const;
 
+    /// 0-100 while status is Downloading
+    int downloadPercent() const;
+
     pajlada::Signals::Signal<Status> statusUpdated;
 
 private:
@@ -69,6 +72,7 @@ private:
     QString onlineVersion_;
     Status status_ = None;
     bool isDowngrade_{};
+    int downloadPercent_ = 0;
 
     QString updateExe_;
     QString updatePortable_;

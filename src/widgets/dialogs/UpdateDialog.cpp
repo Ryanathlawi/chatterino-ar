@@ -37,7 +37,7 @@ UpdateDialog::UpdateDialog()
             return "Yes";
         }
 
-        return "تحميل";
+        return "تحديث";
     }();
     auto *install =
         buttons->addButton(installText, QDialogButtonBox::AcceptRole);
@@ -45,8 +45,8 @@ UpdateDialog::UpdateDialog()
     auto *dismiss = buttons->addButton("تجاهل", QDialogButtonBox::RejectRole);
 
     QObject::connect(install, &QPushButton::clicked, this, [this] {
+        // stay open: the label shows download progress, then the app restarts
         getApp()->getUpdates().installUpdates();
-        this->close();
     });
     QObject::connect(dismiss, &QPushButton::clicked, this, [this] {
         this->dismissed.invoke();
@@ -83,7 +83,9 @@ void UpdateDialog::updateStatusChanged(Updates::Status status)
 
         case Updates::Downloading: {
             this->ui_.label->setText(
-                "جاري تحميل التحديث.\n\nبيعيد Chatterino التشغيل تلقائيًا لما يخلص التحميل.");
+                QString("جاري تحميل التحديث... %1%\n\nالبرنامج بيسكّر ويفتح "
+                        "نفسه لحاله لما يخلص.")
+                    .arg(getApp()->getUpdates().downloadPercent()));
         }
         break;
 
